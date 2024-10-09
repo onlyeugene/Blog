@@ -58,7 +58,7 @@
   z-index: 1;
 }
 
-@media (min-width: 425px) {
+@media (min-width: 320px) {
   .navbar-hero {
     height: 270px; /* Adjust the height for smaller screens */
     }

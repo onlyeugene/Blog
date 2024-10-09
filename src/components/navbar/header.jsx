@@ -42,8 +42,8 @@ const Header = () => {
   return (
     <div className="relative z-10">
       <div className="sm:px-40 px-5 py-5 text-white">
-        <div className="flex justify-between items-center ">
-          <div className="flex gap-2">
+        <div className="flex sm:justify-between justify-center sm:flex-row flex-col sm:gap-0 gap-5 items-center ">
+          <div className="sm:flex gap-2 hidden">
             <FaFacebookF size={14} />
             <FaTwitter size={14} />
             <FaInstagram size={14} />
@@ -58,7 +58,7 @@ const Header = () => {
             </h1>
             <p className="font-medium text-sm">Minimal Blog Website</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 sm:justify-normal justify-between sm:w-fit w-full">
             <Button className="rounded-full bg-custom-gradient py-1.5 px-1.5">
               <IoSearchOutline style={{ color: "white" }} />
             </Button>

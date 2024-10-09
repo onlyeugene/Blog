@@ -58,6 +58,12 @@
   z-index: 1;
 }
 
+@media (min-width: 425px) {
+  .navbar-hero {
+    height: 270px; /* Adjust the height for smaller screens */
+    }
+}
+
 
 /* CSS for the fade-in animation */
 .fade-in {

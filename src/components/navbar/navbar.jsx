@@ -38,7 +38,7 @@ const Navbar = () => {
       className={`navbar w-full z-20  text-sm ${
         scrolled
           ? "bg-white py-2 fixed top-0 text-black fade-in shadow-lg"
-          : "bg-transparent py-4 text-white hero-content"
+          : "bg-transparent sm:py-4 py-1 text-white hero-content"
       }`}
     >
       <div

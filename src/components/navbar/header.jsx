@@ -41,8 +41,8 @@ const Header = () => {
 
   return (
     <div className="relative z-10">
-      <div className="px-40 py-5 text-white">
-        <div className="flex justify-between items-center">
+      <div className="sm:px-40 px-5 py-5 text-white">
+        <div className="flex justify-between items-center ">
           <div className="flex gap-2">
             <FaFacebookF size={14} />
             <FaTwitter size={14} />

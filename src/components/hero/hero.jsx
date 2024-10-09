@@ -4,11 +4,11 @@ import Button from "../button/button";
 const Hero = () => {
   return (
     <div className=" text-white hero">
-     <div className="flex flex-col gap-7 px-40 text-center w-full py-20 hero-content">
+     <div className="flex flex-col gap-7 sm:px-40 px-5 text-center w-full py-20 hero-content">
      <h1 className="text-4xl font-semibold">I&apos;m Blogger .........</h1>
       <p className="text-sm font-light text-gray-300">
         Hello, I&apos;m a content writer who is fascinated by writing about life
-        events and contents. <br />I help bring the right content to the right
+        events and contents. <br className="sm:block hidden"/>I help bring the right content to the right
         people.
       </p>
 

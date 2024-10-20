@@ -22,7 +22,7 @@ const HomeIndex = () => {
 
   // Create a style object for background positioning
   const backgroundStyle = {
-    backgroundPositionY: `${scrollPosition /32}px`,
+    backgroundPositionY: `${scrollPosition /2}px`,
     backgroundSize: 'cover',  // Prevent rescaling
     backgroundAttachment: 'fixed',  // Optional: for a parallax effect
   };

@@ -3,8 +3,8 @@ import Button from "../button/button";
 
 const Hero = () => {
   return (
-    <div className=" text-white hero">
-     <div className="flex flex-col gap-7 sm:px-40 px-5 text-center w-full py-20 hero-content">
+    <div className=" text-white hero ">
+     <div className="flex flex-col  border-t border-gray-500 gap-7 sm:px-40 px-5 text-center w-full py-40 hero-content">
      <h1 className="text-4xl font-semibold">I&apos;m Blogger .........</h1>
       <p className="text-sm font-light text-gray-300">
         Hello, I&apos;m a content writer who is fascinated by writing about life

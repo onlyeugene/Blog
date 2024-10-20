@@ -5,7 +5,7 @@ import Header from "./header";
 const NavbarIndex = () => {
   return (
     <>
-      <div className="navbar-hero border-b border-gray-500 bg-center">
+      <div className="navbar-hero bg-center">
         <header>
           <Header />
         </header>

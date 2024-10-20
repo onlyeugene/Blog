@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [scrollLineWidth, setScrollLineWidth] = useState(0);
+
+  const path = useLocation().pathname
 
   useEffect(() => {
     const headerHeight = document.querySelector("header").offsetHeight;
@@ -35,7 +37,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`navbar w-full z-20  text-sm ${
+      className={`navbar w-full z-20  text-sm sm:block hidden ${
         scrolled
           ? "bg-white py-2 fixed top-0 text-black fade-in shadow-lg"
           : "bg-transparent sm:py-4 py-1 text-white hero-content"
@@ -46,17 +48,19 @@ const Navbar = () => {
         style={{ width: `${scrollLineWidth}%` }}
       ></div>
       <ul className="flex gap-10 justify-center items-center">
-        <Link to="/" className="rounded-full px-3 py-1">
+        <Link to="/" className={`rounded-full px-3 py-1 ${path === '/' ? 'border text-white border-[#fe4f70] bg-[#fe4f70]':'' }`}>
           <li>Home</li>
         </Link>
-        <Link to="/about">
+        <Link to="/about" className={`rounded-full px-3 py-1 ${path === '/about' ? 'border text-white border-[#fe4f70] bg-[#fe4f70]':'' }`}>
           <li>About</li>
         </Link>
-        <Link to="/books" className="flex items-center">
+        <Link to="/books" className={`rounded-full flex items-center px-3 py-1 ${path === '/books' ? 'border text-white border-[#fe4f70] bg-[#fe4f70]':'' }`}>
           <li>Books</li>
           <IoIosArrowDown />
         </Link>
-        <li>Contact</li>
+        <Link to="/contact" className={`rounded-full px-3 py-1 ${path === '/contact' ? 'border text-white border-[#fe4f70] bg-[#fe4f70]':'' }`}>
+          <li>Contact</li>
+        </Link>
       </ul>
     </div>
   );

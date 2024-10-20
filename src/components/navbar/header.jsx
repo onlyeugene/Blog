@@ -8,36 +8,31 @@ import {
 } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import { IoClose, IoSearchOutline } from "react-icons/io5";
-
 import Button from "../button/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+
+import useDisableScrollOnSidebar from "../../hooks/useDisableScrollOnSidebar";
+import useDisableScrollOnSearch from "../../hooks/useDisableScrollOnSearch";
+import useCloseSearchOnEsc from "../../hooks/useCloseSearchOnEsc";
+import {
+  handleSearchToggle,
+  handleSidebarToggle,
+  handleWaveAnimation,
+} from "../../utils/utils";
 
 const Header = () => {
   const [sidebar, setSidebar] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [search, setSearch] = useState(false);
+  const [searchClosing, setSearchClosing] = useState(false);
 
   const path = useLocation().pathname;
 
-  function handleSidebar() {
-    if (sidebar) {
-      setClosing(true);
-      setTimeout(() => {
-        setSidebar(false); // Hide sidebar after fade-out
-        setClosing(false); // Reset closing state
-      }, 300); // Match duration of animation
-    } else {
-      setSidebar(true);
-    }
-  }
-
-  // Prevent scrolling when the sidebar is open
-  useEffect(() => {
-    document.body.style.overflow = sidebar ? "hidden" : "auto"; // Disable scrolling
-    return () => {
-      document.body.style.overflow = "auto"; // Ensure scroll is restored when component unmounts
-    };
-  }, [sidebar]);
+  // Use custom hooks
+  useDisableScrollOnSidebar(sidebar);
+  useDisableScrollOnSearch(search);
+  useCloseSearchOnEsc(setSearch);
 
   return (
     <div className="relative z-10">
@@ -59,12 +54,19 @@ const Header = () => {
             <p className="font-medium text-sm">Minimal Blog Website</p>
           </div>
           <div className="flex items-center gap-2 sm:justify-normal justify-between sm:w-fit w-full">
-            <Button className="rounded-full bg-custom-gradient py-1.5 px-1.5">
+            <Button
+              className="rounded-full bg-custom-gradient py-1.5 px-1.5"
+              onClick={() =>
+                handleSearchToggle(search, setSearch, setSearchClosing)
+              }
+            >
               <IoSearchOutline style={{ color: "white" }} />
             </Button>
             <div
               className="flex flex-col gap-1 bg-custom-gradient rounded-full py-[10px] px-1.5 cursor-pointer"
-              onClick={handleSidebar}
+              onClick={() =>
+                handleSidebarToggle(sidebar, setSidebar, setClosing)
+              }
               aria-label="Toggle Sidebar"
               aria-expanded={sidebar}
             >
@@ -73,7 +75,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className="border-b pt-5 border-gray-500" />
+        <div className="border-b pt-5 sm:block hidden border-gray-500" />
       </div>
 
       {/* Sidebar */}
@@ -82,7 +84,7 @@ const Header = () => {
           {/* Overlay */}
           <div
             className="fixed inset-0 bg-white opacity-25 z-40"
-            onClick={handleSidebar}
+            onClick={() => handleSidebarToggle(sidebar, setSidebar, setClosing)}
           ></div>
 
           {/* Sidebar */}
@@ -95,17 +97,21 @@ const Header = () => {
               style={{ color: "gray" }}
               size={24}
               className="mx-[12rem]"
-              onClick={handleSidebar}
+              onClick={() =>
+                handleSidebarToggle(sidebar, setSidebar, setClosing)
+              }
             />
             <RxAvatar size={60} style={{ color: "black" }} className="mt-10" />
 
             <ul className="text-black text-sm mt-20 flex flex-col gap-6 mx-3">
               <Link
                 to="/"
-                onClick={handleSidebar}
+                onClick={() =>
+                  handleSidebarToggle(sidebar, setSidebar, setClosing)
+                }
                 className={`${
                   path === "/"
-                    ? "text-red-500 border py-2  rounded-sm px-2"
+                    ? "text-red-500 border py-2 rounded-sm px-2"
                     : "border py-2 rounded-sm px-2"
                 }`}
               >
@@ -113,33 +119,39 @@ const Header = () => {
               </Link>
               <Link
                 to="/about"
-                onClick={handleSidebar}
+                onClick={() =>
+                  handleSidebarToggle(sidebar, setSidebar, setClosing)
+                }
                 className={`${
                   path === "/about"
-                    ? "text-red-500 border py-2  rounded-sm px-2"
-                    : "border py-2  rounded-sm px-2"
+                    ? "text-red-500 border py-2 rounded-sm px-2"
+                    : "border py-2 rounded-sm px-2"
                 }`}
               >
                 <li>About</li>
               </Link>
               <Link
                 to="/books"
-                onClick={handleSidebar}
+                onClick={() =>
+                  handleSidebarToggle(sidebar, setSidebar, setClosing)
+                }
                 className={`${
                   path === "/books"
-                    ? "text-red-500 border py-2  rounded-sm px-2"
-                    : "border py-2  rounded-sm px-2"
+                    ? "text-red-500 border py-2 rounded-sm px-2"
+                    : "border py-2 rounded-sm px-2"
                 }`}
               >
                 <li>Books</li>
               </Link>
               <Link
                 to="/contact"
-                onClick={handleSidebar}
+                onClick={() =>
+                  handleSidebarToggle(sidebar, setSidebar, setClosing)
+                }
                 className={`${
                   path === "/contact"
-                    ? "text-red-500 border py-2  rounded-sm px-2"
-                    : "border py-2  rounded-sm px-2"
+                    ? "text-red-500 border py-2 rounded-sm px-2"
+                    : "border py-2 rounded-sm px-2"
                 }`}
               >
                 <li>Contact</li>
@@ -156,6 +168,40 @@ const Header = () => {
             </div>
           </div>
         </>
+      )}
+
+      {/* Search Modal */}
+      {search && (
+        <div
+          className={`bg-white absolute top-[0%] w-full sm:h-screen h-screen flex flex-col items-center ${
+            searchClosing ? "animate-genieFadeOut" : "animate-genieFadeIn"
+          }`}
+        >
+          <div className="w-full items-center flex flex-col mt-[50%]">
+            <IoClose
+              style={{ color: "gray" }}
+              size={30}
+              className="absolute top-5 right-4"
+              onClick={() =>
+                handleSearchToggle(search, setSearch, setSearchClosing)
+              }
+            />
+            <h1 className="text-2xl font-semibold">Press ESC to close</h1>
+            <div className="w-full flex justify-center items-center sm:gap-5 gap-3">
+              <input
+                type="text"
+                placeholder="Search and press enter..."
+                className="border py-3 px-2 rounded-full sm:w-[50%] w-[60%] text-sm mt-5 outline-[#fe4f70]"
+              />
+              <Button
+                className="relative border rounded-full px-7 bg-[#fe4f70] border-[#fe4f70] py-3 flex items-center justify-center sm:mt-4 mt-6 overflow-hidden wave-button"
+                onClick={(e) => handleWaveAnimation(e)}
+              >
+                <IoSearchOutline style={{ color: "white" }} size={20} />
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
